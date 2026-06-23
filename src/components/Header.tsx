@@ -22,6 +22,7 @@ const NAV_ITEMS: { tab: Tab; label: string }[] = [
   { tab: 'consulting', label: 'Consulting' },
   { tab: 'platform', label: 'UAIO Platform' },
   { tab: 'verify', label: 'Verify Math' },
+  { tab: 'showcase', label: 'Showcase' },
 ];
 
 export default function Header({

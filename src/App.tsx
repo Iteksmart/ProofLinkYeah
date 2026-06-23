@@ -12,6 +12,7 @@ import ConsultingView from './components/ConsultingView';
 import PlatformView from './components/PlatformView';
 import VerifyView from './components/VerifyView';
 import ProductView from './components/ProductView';
+import ProofLink from './pages/ProofLink';
 import ReceiptDetailDrawer from './components/ReceiptDetailDrawer';
 import ContactAuditModal from './components/ContactAuditModal';
 import DeployModal from './components/DeployModal';
@@ -90,7 +91,15 @@ export default function App() {
         clearNotifications={handleClearNotifications}
       />
 
+      {/* Award-winning ProofLink showcase page (full-bleed) */}
+      {activeTab === 'showcase' && (
+        <div className="relative z-10 pt-18">
+          <ProofLink />
+        </div>
+      )}
+
       {/* Main View Area Container */}
+      {activeTab !== 'showcase' && (
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 relative z-10">
         <AnimatePresence mode="wait">
           {activeTab === 'product' && (
@@ -145,8 +154,10 @@ export default function App() {
           )}
         </AnimatePresence>
       </main>
+      )}
 
       {/* FOOTER */}
+      {activeTab !== 'showcase' && (
       <footer className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-24 border-t border-purple-500/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-mono text-gray-500">
         <div>
           <p>© 2026 iTechSmart Inc. All rights reserved.</p>
@@ -162,6 +173,7 @@ export default function App() {
           <span className="text-purple-400">Award-winning design 2026</span>
         </div>
       </footer>
+      )}
 
       {/* 1. Cryptographic side detail drawer */}
       <AnimatePresence>
