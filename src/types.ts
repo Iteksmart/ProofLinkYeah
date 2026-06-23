@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-export type Tab = 'product' | 'consulting' | 'platform' | 'verify';
+export type Tab = 'product' | 'consulting' | 'platform' | 'verify' | 'showcase';
 
 export interface TimelineStep {
   dayNumber: number;
