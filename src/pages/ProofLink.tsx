@@ -11,6 +11,7 @@ export default function ProofLink() {
   const [heroVisible, setHeroVisible] = useState(false)
   const [sectionVisible, setSectionVisible] = useState<Record<string,boolean>>({})
   const sectionRefs = useRef<Record<string,HTMLElement|null>>({})
+  const daysLeft = Math.max(0, Math.ceil((new Date("2026-08-02").getTime() - Date.now()) / 86400000))
 
   useEffect(() => {
     setTimeout(() => setHeroVisible(true), 100)
@@ -221,7 +222,7 @@ export default function ProofLink() {
       <section id="compliance" data-animate className="py-24 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="bg-gradient-to-r from-red-900/30 to-orange-900/30 border border-red-500/20 rounded-3xl p-10 text-center mb-10">
-            <div className="text-6xl font-black text-red-400 mb-2">40</div>
+            <div className="text-6xl font-black text-red-400 mb-2">{daysLeft}</div>
             <div className="text-xl text-red-300 mb-4">days until EU AI Act Article 12</div>
             <h2 className="text-3xl font-black mb-4">August 2, 2026.</h2>
             <p className="text-slate-300 max-w-2xl mx-auto mb-6">
