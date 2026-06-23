@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Hanken Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-electric-blue: #3b82f6;
+  --color-cyan-glow: #22d3ee;
+  --color-secure-green: #10b981;
+  --color-chain-link-gold: #f59e0b;
+  --color-deep-purple: #8b5cf6;
+  --color-slate-deep: #090312;
+  --color-void-black: #05000A;
+}
+
+/* Custom background animation and styling */
+body {
+  background-color: #05000A;
+  color: #f3f4f6;
+  font-family: var(--font-sans);
+}
+
+.liquid-glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 15px 35px 0 rgba(0, 0, 0, 0.45);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.liquid-glass-card:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(168, 85, 247, 0.35);
+  box-shadow: 0 20px 45px 0 rgba(147, 51, 234, 0.15);
+}
+
+.receipt-clip {
+  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 0 100%);
+}
+
+.glow-purple {
+  box-shadow: 0 0 40px rgba(147, 51, 234, 0.25);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #05000A;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(147, 51, 234, 0.2);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(147, 51, 234, 0.4);
+}
+

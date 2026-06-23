@@ -1,0 +1,6 @@
+{
+  "name": "ProofLink Product Page",
+  "description": "An award-winning 2026 showcase product page for iTechSmart Inc.'s ProofLink, with interactive simulations, real-time telemetry, and liquid glass aesthetics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
