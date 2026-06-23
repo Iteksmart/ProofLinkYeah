@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { motion } from 'motion/react';
-import { Terminal, Bell, Shield, Radio, KeyRound, ExternalLink, HelpCircle } from 'lucide-react';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Terminal, Bell, Shield, Radio, KeyRound, ExternalLink, Menu, X, ChevronRight } from 'lucide-react';
 import { Tab } from '../types';
 
 interface HeaderProps {
@@ -15,20 +16,37 @@ interface HeaderProps {
   clearNotifications: () => void;
 }
 
-export default function Header({ 
-  activeTab, 
-  setActiveTab, 
-  onOpenCli, 
+// Single source of truth for the product pages wired into the nav + hamburger.
+const NAV_ITEMS: { tab: Tab; label: string }[] = [
+  { tab: 'product', label: 'Product' },
+  { tab: 'consulting', label: 'Consulting' },
+  { tab: 'platform', label: 'UAIO Platform' },
+  { tab: 'verify', label: 'Verify Math' },
+];
+
+export default function Header({
+  activeTab,
+  setActiveTab,
+  onOpenCli,
   notificationCount,
-  clearNotifications 
+  clearNotifications
 }: HeaderProps) {
+  // Hamburger menu open state (mobile / tablet navigation)
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Navigate to a page and close the hamburger drawer
+  const handleNavigate = (tab: Tab) => {
+    setActiveTab(tab);
+    setIsMenuOpen(false);
+  };
+
   return (
     <header className="fixed top-0 inset-x-0 h-18 z-50 bg-[#05000A]/75 backdrop-blur-xl border-b border-white/10 shadow-[0_2px_24px_-10px_rgba(147,51,234,0.3)]">
       <div className="max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        
+
         {/* Left Brand Area */}
         <div className="flex items-center gap-3">
-          <motion.div 
+          <motion.div
             initial={{ rotate: -15, scale: 0.8 }}
             animate={{ rotate: 0, scale: 1 }}
             transition={{ type: 'spring', stiffness: 200 }}
@@ -53,10 +71,9 @@ export default function Header({
           </div>
         </div>
 
-        {/* Center Tabs */}
-        <nav className="flex items-center bg-slate-900/40 p-1 rounded-lg border border-white/10">
-          {(['product', 'consulting', 'platform', 'verify'] as Tab[]).map((tab) => {
-            const label = tab === 'product' ? 'Product' : tab === 'consulting' ? 'Consulting' : tab === 'platform' ? 'UAIO Platform' : 'Verify Math';
+        {/* Center Tabs (desktop) */}
+        <nav className="hidden md:flex items-center bg-slate-900/40 p-1 rounded-lg border border-white/10">
+          {NAV_ITEMS.map(({ tab, label }) => {
             const isActive = activeTab === tab;
             return (
               <button
@@ -82,9 +99,9 @@ export default function Header({
 
         {/* Right Controls */}
         <div className="flex items-center gap-2 sm:gap-4">
-          
+
           {/* Quick Terminal Launcher */}
-          <button 
+          <button
             onClick={onOpenCli}
             className="p-2 rounded-lg bg-purple-500/5 border border-white/10 hover:border-purple-400 hover:bg-purple-500/10 text-purple-400 transition-all cursor-pointer relative group"
             title="Launch Terminal Simulator"
@@ -96,7 +113,7 @@ export default function Header({
           </button>
 
           {/* Real-time Notifications Bell */}
-          <button 
+          <button
             onClick={clearNotifications}
             className="p-2 rounded-lg bg-purple-500/5 border border-white/10 hover:border-purple-400 hover:bg-purple-500/10 text-purple-400 transition-all cursor-pointer relative group"
             title="Clear Alerts"
@@ -160,8 +177,101 @@ export default function Header({
             </div>
           </div>
 
+          {/* Hamburger Menu Toggle (mobile / tablet) */}
+          <button
+            onClick={() => setIsMenuOpen((prev) => !prev)}
+            aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-nav-drawer"
+            className="md:hidden p-2 rounded-lg bg-purple-500/5 border border-white/10 hover:border-purple-400 hover:bg-purple-500/10 text-purple-400 transition-all cursor-pointer"
+          >
+            <AnimatePresence mode="wait" initial={false}>
+              {isMenuOpen ? (
+                <motion.span key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }} className="block">
+                  <X className="w-5 h-5" />
+                </motion.span>
+              ) : (
+                <motion.span key="open" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }} className="block">
+                  <Menu className="w-5 h-5" />
+                </motion.span>
+              )}
+            </AnimatePresence>
+          </button>
+
         </div>
       </div>
+
+      {/* Hamburger Drawer (mobile / tablet) */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <>
+            {/* Click-away backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsMenuOpen(false)}
+              className="md:hidden fixed inset-0 top-18 bg-black/50 backdrop-blur-sm z-40"
+            />
+
+            {/* Slide-down panel with all product pages wired in */}
+            <motion.nav
+              id="mobile-nav-drawer"
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ type: 'spring', stiffness: 320, damping: 30 }}
+              className="md:hidden absolute top-18 inset-x-0 z-40 mx-3 mt-2 p-2 rounded-2xl bg-[#0d0d24]/95 border border-purple-500/20 shadow-2xl backdrop-blur-xl"
+            >
+              <p className="px-3 pt-2 pb-1 text-[10px] font-mono uppercase tracking-widest text-purple-400/70">
+                Product Pages
+              </p>
+              {NAV_ITEMS.map(({ tab, label }) => {
+                const isActive = activeTab === tab;
+                return (
+                  <button
+                    key={tab}
+                    onClick={() => handleNavigate(tab)}
+                    className={`w-full flex items-center justify-between px-3 py-3 rounded-xl text-sm font-label font-semibold tracking-wide transition-colors cursor-pointer ${
+                      isActive
+                        ? 'text-white bg-gradient-to-r from-purple-600/30 via-indigo-600/20 to-purple-600/30 border border-purple-500/40'
+                        : 'text-gray-300 hover:text-purple-300 hover:bg-white/5'
+                    }`}
+                  >
+                    <span>{label}</span>
+                    <ChevronRight className={`w-4 h-4 ${isActive ? 'text-purple-300' : 'text-gray-500'}`} />
+                  </button>
+                );
+              })}
+
+              {/* Secondary actions inside the hamburger */}
+              <div className="mt-1.5 pt-1.5 border-t border-purple-500/10 space-y-1">
+                <button
+                  onClick={() => {
+                    onOpenCli();
+                    setIsMenuOpen(false);
+                  }}
+                  className="w-full flex items-center gap-2.5 px-3 py-3 rounded-xl text-sm font-medium text-gray-300 hover:text-purple-300 hover:bg-white/5 transition-colors cursor-pointer"
+                >
+                  <Terminal className="w-4 h-4 text-purple-400" />
+                  <span>Terminal Shell</span>
+                </button>
+                <a
+                  href="https://itechsmart.dev"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="w-full flex items-center gap-2.5 px-3 py-3 rounded-xl text-sm font-medium text-orange-400 hover:bg-orange-500/10 transition-colors"
+                >
+                  <Radio className="w-4 h-4 animate-pulse" />
+                  <span>itechsmart.dev</span>
+                  <ExternalLink className="w-3 h-3 ml-auto" />
+                </a>
+              </div>
+            </motion.nav>
+          </>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
