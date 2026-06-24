@@ -3,11 +3,40 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Google AI Studio App</title>
+    <title>ProofLink — Cryptographic Proof for Autonomous IT | iTechSmart</title>
+    <meta name="description" content="ProofLink seals every autonomous IT action with a tamper-evident, Bitcoin-anchored cryptographic receipt. 57,000+ receipts. 0 chain breaks. Verify free." />
+    <meta property="og:title" content="ProofLink | iTechSmart" />
+    <meta property="og:description" content="Every AI fix. Cryptographically proven." />
+    <style>
+      /* iTechSmart navigation bar — persists through builds */
+      #its-nav-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 99999;
+        height: 54px;
+      }
+      /* Push ProofLink SPA header below our nav bar */
+      body { padding-top: 126px !important; }
+      header, [role="banner"] { top: 54px !important; }
+    </style>
   </head>
   <body>
+    <div id="its-nav-bar" style="background:rgba(6,2,12,0.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(168,85,247,0.22);padding:0 24px;display:flex;align-items:center;justify-content:space-between;font-family:Space Grotesk,Inter,sans-serif;box-shadow:0 4px 20px rgba(0,0,0,0.4)">
+      <a href="https://itechsmart.dev" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:#f0eaff;font-weight:700;font-size:15px">
+        <svg width="20" height="20" viewBox="0 0 100 100" fill="none" stroke="#c084fc" stroke-width="8" stroke-linejoin="round" stroke-linecap="round">
+          <path d="M50 5L59.5 27L81.8 18.2L73 40.5L95 50L73 59.5L81.8 81.8L59.5 73L50 95L40.5 73L18.2 81.8L27 59.5L5 50L27 40.5L18.2 18.2L40.5 27Z"/>
+        </svg>
+        iTechSmart <span style="font-size:11px;color:rgba(192,132,252,0.55);font-weight:500;margin-left:4px">/ ProofLink</span>
+      </a>
+      <div style="display:flex;gap:10px;align-items:center">
+        <a href="https://itechsmart.dev/prooflink" style="color:rgba(200,175,240,0.65);text-decoration:none;font-size:12px;font-weight:500">&#8592; Platform</a>
+        <a href="https://verify.itechsmart.dev" style="color:rgba(200,175,240,0.65);text-decoration:none;font-size:12px;font-weight:500">Verify Receipt</a>
+        <a href="https://itechsmart.dev/contact" style="background:linear-gradient(90deg,#7c3aed,#6d28d9);color:#fff;text-decoration:none;padding:6px 14px;border-radius:8px;font-size:12px;font-weight:700">Book Demo &#8594;</a>
+      </div>
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-
